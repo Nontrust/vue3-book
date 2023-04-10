@@ -34,7 +34,7 @@ export default {
                 console.log(`Composition API watchEffect Call ${count_c_2.value}`)
             },
             {
-              flush: 'post',
+              flush: 'post', // post, pre
             }
         )
 
