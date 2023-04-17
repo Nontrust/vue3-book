@@ -1,11 +1,12 @@
-import {reactive, toRefs} from 'vue'
+import { reactive, toRefs } from 'vue'
 
-export const useIdb = async () =>{
-    const db = await this.$db
+export const useIdb = async (currentInstance) =>{
+    const db = await currentInstance.appContext.config.globalProperties.$idb
+
     const KEY = 'todos'
     const storage_reactive = reactive({id:0})
 
-    const transaction = db.transaction(KEY, 'readwrite')
+    const transaction = db.transaction('todo-app', 'readwrite')
     const objectStore = transaction.objectStore('todos');
 
     const loadTodos = async (initTodos) => {
@@ -28,11 +29,22 @@ export const useIdb = async () =>{
         });
     }
 
+    const deleteTodo = async (id) => {
+        return await objectStore.delete(id);
+    }
+
+    const updateTodo = async (todo, id = todo.id) => {
+        todo.id = id
+        return await objectStore.put(todo)
+    }
+
     return {
         ...toRefs(storage_reactive),
         loadTodos,
         saveTodo,
         saveTodos,
+        deleteTodo,
+        updateTodo,
     }
 
 }

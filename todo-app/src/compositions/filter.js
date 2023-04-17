@@ -41,9 +41,7 @@ export const useFilter = () => {
             .concat(getCompletedTodayTodos(todos))
             .slice()
             .sort(sortDate)
-    }
-
-    
+    }    
 
     return {
         getPendingTodos,

@@ -13,3 +13,4 @@ const today = moment().format('YYYY-MM-DD')
 app.provide('today',today)
 app.use(idbPlugin)
 app.mount('#app')
+
